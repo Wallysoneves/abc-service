@@ -1,0 +1,41 @@
+project:
+  name: '@project.artifactId@'
+  version: '@project.version@'
+  description: '@project.description@'
+
+info:
+  build:
+    artifact: "@project.artifactId@"
+    name: "@project.name@"
+    description: '@project.description@'
+    version: '@project.version@'
+
+application:
+  title: ${project.name}
+  version: ${project.version}
+
+spring:
+  output:
+    ansi:
+      enabled: always
+
+  banner:
+    charset: UTF-8
+    location: classpath:/banner.txt
+
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+
+api:
+  security:
+    token:
+      secret: https://jwt.io/#debug§ger-io?token=eyJhbGciOiJIUzM4NCIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.oIZ9XoRtszB_t3AJSqc1dVyaSqUWdYQ4ks1yNa7KACzomRQYm6ZdeYe0QcbShrTo
