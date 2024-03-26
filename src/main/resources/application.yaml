@@ -38,4 +38,6 @@ spring:
 api:
   security:
     token:
-      secret: https://jwt.io/#debug§ger-io?token=eyJhbGciOiJIUzM4NCIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.oIZ9XoRtszB_t3AJSqc1dVyaSqUWdYQ4ks1yNa7KACzomRQYm6ZdeYe0QcbShrTo
+      secret: https://jwt.io/#debugï¿½ger-io?token=eyJhbGciOiJIUzM4NCIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.oIZ9XoRtszB_t3AJSqc1dVyaSqUWdYQ4ks1yNa7KACzomRQYm6ZdeYe0QcbShrTo
+
+      #DATABASE_USERNAME=postgres;DATABASE_URL=jdbc:postgresql://localhost:5432/abc;DATABASE_PASSWORD=123456
