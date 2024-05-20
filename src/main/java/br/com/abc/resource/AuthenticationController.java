@@ -1,11 +1,10 @@
 package br.com.abc.resource;
 
-import br.com.abc.domain.Usuario;
-import br.com.abc.domain.dto.AutenticationDTO;
+import br.com.abc.entity.UserEntity;
+import br.com.abc.domain.dto.AuthenticationDTO;
 import br.com.abc.domain.dto.LoginDTO;
-import br.com.abc.domain.dto.RegistroDTO;
-import br.com.abc.infrastructure.exception.AbcException;
-import br.com.abc.repository.UsuarioRepository;
+import br.com.abc.domain.dto.RegisterDTO;
+import br.com.abc.repository.UserRepository;
 import br.com.abc.infrastructure.security.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("auth")
-public class AutenticationController {
+public class AuthenticationController {
 
     @Autowired
     private TokenService tokenService;
@@ -30,32 +29,35 @@ public class AutenticationController {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private UserRepository userRepository;
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody @Valid AutenticationDTO data) {
-        var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.senha());
+    public ResponseEntity<LoginDTO> login(@RequestBody @Valid AuthenticationDTO data) {
+        var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
         var auth = this.authenticationManager.authenticate(usernamePassword);
 
-        var token = tokenService.geneteToken((Usuario) auth.getPrincipal());
+        var token = tokenService.generateToken((UserEntity) auth.getPrincipal());
 
         return ResponseEntity.ok(new LoginDTO(token));
     }
 
-    @PostMapping("/registrar")
-    public ResponseEntity registrar(@RequestBody @Valid RegistroDTO data) {
-        if(this.usuarioRepository.findByLogin(data.login()) != null) {
-            return new ResponseEntity<>("Esse usuário já possui cadastro!", HttpStatus.BAD_REQUEST);
+    @PostMapping("/register")
+    public ResponseEntity<String> register(@RequestBody @Valid RegisterDTO data) {
+        if (this.userRepository.findByLoginAndNotDeleted(data.login()) != null) {
+            return new ResponseEntity<>("This user is already registered!", HttpStatus.BAD_REQUEST);
         }
 
-        String encryptedPassword = new BCryptPasswordEncoder().encode(data.senha());
-        Usuario newUser = Usuario.builder()
+        String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
+        UserEntity newUser = UserEntity.builder()
                 .login(data.login())
-                .senha(encryptedPassword)
+                .password(encryptedPassword)
                 .role(data.role())
+                .name(data.name())
+                .email(data.email())
+                .type(data.type())
                 .build();
 
-        this.usuarioRepository.save(newUser);
+        this.userRepository.save(newUser);
 
         return ResponseEntity.ok().build();
     }
