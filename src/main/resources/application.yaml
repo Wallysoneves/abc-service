@@ -18,26 +18,25 @@ spring:
   output:
     ansi:
       enabled: always
-
   banner:
     charset: UTF-8
     location: classpath:/banner.txt
-
   jpa:
     open-in-view: false
     hibernate:
       ddl-auto: update
-    show-sql: true
-
+      show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQL95Dialect
   datasource:
-    url: ${DATABASE_URL}
-    username: ${DATABASE_USERNAME}
-    password: ${DATABASE_PASSWORD}
+    url: jdbc:postgresql://localhost:5432/abc
+    username: postgres
+    password: 123456
     driver-class-name: org.postgresql.Driver
 
 api:
   security:
     token:
-      secret: https://jwt.io/#debug�ger-io?token=eyJhbGciOiJIUzM4NCIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.oIZ9XoRtszB_t3AJSqc1dVyaSqUWdYQ4ks1yNa7KACzomRQYm6ZdeYe0QcbShrTo
-
-      #DATABASE_USERNAME=postgres;DATABASE_URL=jdbc:postgresql://localhost:5432/abc;DATABASE_PASSWORD=123456
+      secret: 'https://jwt.io/#debugger-io?token=eyJhbGciOiJIUzM4NCIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0.oIZ9XoRtszB_t3AJSqc1dVyaSqUWdYQ4ks1yNa7KACzomRQYm6ZdeYe0QcbShrTo'
