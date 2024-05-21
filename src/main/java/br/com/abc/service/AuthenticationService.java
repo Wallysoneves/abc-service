@@ -1,6 +1,6 @@
 package br.com.abc.service;
 
-import br.com.abc.entity.UserEntity;
+import br.com.abc.domain.UserEntity;
 import br.com.abc.domain.dto.AuthenticationDTO;
 import br.com.abc.domain.dto.LoginDTO;
 import br.com.abc.domain.dto.RegisterDTO;
@@ -35,7 +35,7 @@ public class AuthenticationService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserDetails user = userRepository.findByLoginAndNotDeleted(username);
+        UserDetails user = userRepository.findByLogin(username);
         if (user == null) {
             throw new UsernameNotFoundException("User not found with login: " + username);
         }
@@ -55,7 +55,7 @@ public class AuthenticationService implements UserDetailsService {
     }
 
     public void register(@Valid RegisterDTO data) {
-        if (userRepository.findByLoginAndNotDeleted(data.login()) != null) {
+        if (userRepository.findByLogin(data.login()) != null) {
             throw new RuntimeException("This user is already registered!");
         }
 

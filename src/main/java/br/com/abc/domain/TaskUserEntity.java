@@ -1,4 +1,4 @@
-package br.com.abc.entity;
+package br.com.abc.domain;
 
 import br.com.abc.core.BaseEntity;
 import jakarta.persistence.*;

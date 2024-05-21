@@ -1,4 +1,4 @@
-package br.com.abc.entity;
+package br.com.abc.domain;
 
 import br.com.abc.core.BaseEntity;
 import jakarta.persistence.*;
@@ -9,11 +9,10 @@ import lombok.Setter;
 
 @Setter
 @Getter
-@Entity
 @Table(name = "headers")
+@Entity
 public class HeaderEntity extends BaseEntity {
 
-    // Getters and Setters
     @Column(name = "city")
     private String city;
 

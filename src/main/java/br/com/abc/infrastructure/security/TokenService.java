@@ -1,6 +1,6 @@
 package br.com.abc.infrastructure.security;
 
-import br.com.abc.entity.UserEntity;
+import br.com.abc.domain.UserEntity;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;

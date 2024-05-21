@@ -1,10 +1,9 @@
 package br.com.abc.resource;
 
-import br.com.abc.entity.UserEntity;
+import br.com.abc.domain.UserEntity;
 import br.com.abc.domain.dto.AuthenticationDTO;
 import br.com.abc.domain.dto.LoginDTO;
 import br.com.abc.domain.dto.RegisterDTO;
-import br.com.abc.repository.UserRepository;
 import br.com.abc.infrastructure.security.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import br.com.abc.repository.UserRepository;
 
 @RestController
 @RequestMapping("auth")
@@ -43,7 +43,7 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody @Valid RegisterDTO data) {
-        if (this.userRepository.findByLoginAndNotDeleted(data.login()) != null) {
+        if (this.userRepository.findByLogin(data.login()) != null) {
             return new ResponseEntity<>("This user is already registered!", HttpStatus.BAD_REQUEST);
         }
 

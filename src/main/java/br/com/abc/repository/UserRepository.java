@@ -1,33 +1,14 @@
 package br.com.abc.repository;
 
-import br.com.abc.entity.UserEntity;
-import org.springframework.data.jpa.repository.Query;
+import br.com.abc.domain.UserEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
 @Repository
-public interface UserRepository extends BaseRepository<UserEntity, Long> {
+public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
-    @Override
-    default Optional<UserEntity> findByIdAndDeletedFalse(Long id) {
-        return findById(id).filter(user -> !user.getDeleted());
-    }
+    UserDetails findByLogin(String login);
 
-    @Override
-    default void softDeleteById(Long id) {
-        findById(id).ifPresent(user -> {
-            user.setDeleted(true);
-            save(user);
-        });
-    }
 
-    @Override
-    default void softDelete(UserEntity user) {
-        user.setDeleted(true);
-        save(user);
-    }
-
-    @Query("SELECT u FROM TaskUserEntity u WHERE u.user = ?1 AND u.deleted = false")
-    UserEntity findByLoginAndNotDeleted(String login);
 }

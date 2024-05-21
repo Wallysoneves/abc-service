@@ -1,4 +1,4 @@
-package br.com.abc.entity;
+package br.com.abc.domain;
 
 import br.com.abc.core.BaseEntity;
 import br.com.abc.domain.enums.TipoUsuario;
@@ -13,8 +13,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-@Table(name = "user")
-@Entity(name = "user")
+@Table(name = "users")
+@Entity
 @Getter
 @Setter
 @Builder
