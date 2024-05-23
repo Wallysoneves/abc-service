@@ -2,9 +2,11 @@ package br.com.abc.service;
 
 import br.com.abc.domain.TaskUserEntity;
 import br.com.abc.domain.UserEntity;
+import br.com.abc.infrastructure.exception.AbcException;
 import br.com.abc.repository.TaskUserRepository;
 import br.com.abc.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +21,7 @@ public class TaskUserService {
     private UserRepository userRepository;
 
     public TaskUserEntity create(String task, Long userId) {
-        UserEntity user = userRepository.findById(userId).orElseThrow();
+        UserEntity user = userRepository.findById(userId).orElseThrow(() -> new AbcException("user not found", HttpStatus.BAD_REQUEST));
 
         TaskUserEntity taskUser = TaskUserEntity.builder()
                                                 .user(user)
@@ -34,11 +36,11 @@ public class TaskUserService {
     }
 
     public TaskUserEntity getById(Long taskId) {
-        return taskUserRepository.findById(taskId).orElseThrow();
+        return taskUserRepository.findById(taskId).orElseThrow(() -> new AbcException("user not found", HttpStatus.BAD_REQUEST));
     }
 
     public List<TaskUserEntity> getByUser(Long userId) {
-        UserEntity user = userRepository.findById(userId).orElseThrow();
+        UserEntity user = userRepository.findById(userId).orElseThrow(() -> new AbcException("user not found", HttpStatus.BAD_REQUEST));
 
         return taskUserRepository.findByUser(user);
     }

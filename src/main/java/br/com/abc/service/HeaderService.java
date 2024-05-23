@@ -2,9 +2,11 @@ package br.com.abc.service;
 
 import br.com.abc.domain.HeaderEntity;
 import br.com.abc.domain.UserEntity;
+import br.com.abc.infrastructure.exception.AbcException;
 import br.com.abc.repository.HeaderRepository;
 import br.com.abc.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +25,7 @@ public class HeaderService {
     }
 
     public List<HeaderEntity> getByUser(Long userId) {
-        UserEntity user = userRepository.findById(userId).orElseThrow();
+        UserEntity user = userRepository.findById(userId).orElseThrow(() -> new AbcException("user not found", HttpStatus.BAD_REQUEST));
 
         return headerRepository.findByUser(user);
     }
