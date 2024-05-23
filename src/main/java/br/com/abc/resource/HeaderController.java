@@ -35,7 +35,6 @@ public class HeaderController {
             consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE },
             produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }
     )
-
     public ResponseEntity<HeaderEntity> create(@RequestBody HeaderEntity headerEntityCreate) {
         return new ResponseEntity<>(headerService.create(headerEntityCreate), HttpStatus.CREATED);
     }
