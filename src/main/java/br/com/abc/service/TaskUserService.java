@@ -37,6 +37,12 @@ public class TaskUserService {
         return taskUserRepository.findById(taskId).orElseThrow();
     }
 
+    public List<TaskUserEntity> getByUser(Long userId) {
+        UserEntity user = userRepository.findById(userId).orElseThrow();
+
+        return taskUserRepository.findByUser(user);
+    }
+
     public TaskUserEntity update(TaskUserEntity taskUpdate) {
         return taskUserRepository.save(taskUpdate);
     }

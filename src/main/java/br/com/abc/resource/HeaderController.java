@@ -24,6 +24,13 @@ public class HeaderController {
         return new ResponseEntity<>(headerService.getById(id), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/user",
+            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }
+    )
+    public ResponseEntity<List<HeaderEntity>> getByUser(@RequestParam("id") Long userId) {
+        return new ResponseEntity<>(headerService.getByUser(userId), HttpStatus.OK);
+    }
+
     @GetMapping(
             produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }
     )

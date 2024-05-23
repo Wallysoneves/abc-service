@@ -40,6 +40,13 @@ public class TaskUserController {
         return new ResponseEntity<>(taskUserService.getById(taskId), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/user",
+            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }
+    )
+    public ResponseEntity<List<TaskUserEntity>> getByUser(@RequestParam("userId") Long taskId) {
+        return new ResponseEntity<>(taskUserService.getByUser(taskId), HttpStatus.OK);
+    }
+
     @PutMapping(
             consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE },
             produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }
