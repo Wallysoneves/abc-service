@@ -1,6 +1,6 @@
 package br.com.abc.domain;
 
-import br.com.abc.core.BaseEntity;
+import br.com.abc.domain.core.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

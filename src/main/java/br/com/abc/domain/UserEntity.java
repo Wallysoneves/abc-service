@@ -1,6 +1,6 @@
 package br.com.abc.domain;
 
-import br.com.abc.core.BaseEntity;
+import br.com.abc.domain.core.BaseEntity;
 import br.com.abc.domain.enums.TipoUsuario;
 import br.com.abc.domain.enums.UsuarioRole;
 import jakarta.persistence.*;

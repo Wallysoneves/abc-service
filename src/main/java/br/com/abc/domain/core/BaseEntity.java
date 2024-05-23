@@ -1,4 +1,4 @@
-package br.com.abc.core;
+package br.com.abc.domain.core;
 
 import jakarta.persistence.*;
 import lombok.Getter;

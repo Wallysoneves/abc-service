@@ -1,6 +1,6 @@
 package br.com.abc.domain;
 
-import br.com.abc.core.BaseEntity;
+import br.com.abc.domain.core.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import jakarta.validation.constraints.NotBlank;
@@ -10,6 +10,7 @@ import jakarta.validation.constraints.NotNull;
 @Table(name = "task_users")
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
