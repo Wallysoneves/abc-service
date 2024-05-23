@@ -5,6 +5,7 @@ import br.com.abc.domain.dto.AuthenticationDTO;
 import br.com.abc.domain.dto.LoginDTO;
 import br.com.abc.domain.dto.RegisterDTO;
 import br.com.abc.infrastructure.security.TokenService;
+import br.com.abc.repository.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import br.com.abc.repository.UserRepository;
 
 @RestController
 @RequestMapping("auth")

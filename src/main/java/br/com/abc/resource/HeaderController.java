@@ -18,37 +18,37 @@ public class HeaderController {
     private HeaderService headerService;
 
     @GetMapping(value = "/id",
-            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
     )
     public ResponseEntity<HeaderEntity> getById(@RequestParam("id") Long id) {
         return new ResponseEntity<>(headerService.getById(id), HttpStatus.OK);
     }
 
     @GetMapping(value = "/user",
-            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
     )
     public ResponseEntity<List<HeaderEntity>> getByUser(@RequestParam("id") Long userId) {
         return new ResponseEntity<>(headerService.getByUser(userId), HttpStatus.OK);
     }
 
     @GetMapping(
-            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
     )
     public ResponseEntity<List<HeaderEntity>> getAll() {
         return new ResponseEntity<>(headerService.getAll(), HttpStatus.OK);
     }
 
     @PostMapping(
-            consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE },
-            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }
+            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
     )
     public ResponseEntity<HeaderEntity> create(@RequestBody HeaderEntity headerEntityCreate) {
         return new ResponseEntity<>(headerService.create(headerEntityCreate), HttpStatus.CREATED);
     }
 
     @PutMapping(
-            consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE },
-            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }
+            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
     )
     public ResponseEntity<HeaderEntity> update(HeaderEntity headerUpdate) {
         return new ResponseEntity<>(headerService.update(headerUpdate), HttpStatus.OK);
