@@ -4,10 +4,12 @@ import br.com.abc.domain.UserEntity;
 import br.com.abc.domain.dto.AuthenticationDTO;
 import br.com.abc.domain.dto.LoginDTO;
 import br.com.abc.domain.dto.RegisterDTO;
+import br.com.abc.domain.dto.UserDTO;
 import br.com.abc.repository.UserRepository;
 import br.com.abc.infrastructure.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -51,7 +53,16 @@ public class AuthenticationService implements UserDetailsService {
         }
 
         var token = tokenService.generateToken((UserEntity) auth.getPrincipal());
-        return new LoginDTO(token);
+
+        UserEntity userEntity = this.userRepository.encontrarPorLogin(data.login());
+        return new LoginDTO(
+                new UserDTO(userEntity.getId()
+                        , userEntity.getEmail()
+                        , userEntity.getPassword()
+                        , userEntity.getLogin()
+                        , userEntity.getType().getTipo()
+                        , userEntity.getName())
+                , token);
     }
 
     public void register(@Valid RegisterDTO data) {

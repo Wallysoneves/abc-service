@@ -4,8 +4,8 @@ import br.com.abc.domain.UserEntity;
 import br.com.abc.domain.dto.AuthenticationDTO;
 import br.com.abc.domain.dto.LoginDTO;
 import br.com.abc.domain.dto.RegisterDTO;
+import br.com.abc.domain.dto.UserDTO;
 import br.com.abc.infrastructure.security.TokenService;
-import br.com.abc.repository.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import br.com.abc.repository.UserRepository;
 
 @RestController
 @RequestMapping("auth")
@@ -37,8 +38,16 @@ public class AuthenticationController {
         var auth = this.authenticationManager.authenticate(usernamePassword);
 
         var token = tokenService.generateToken((UserEntity) auth.getPrincipal());
+        UserEntity userEntity = this.userRepository.encontrarPorLogin(data.login());
 
-        return ResponseEntity.ok(new LoginDTO(token));
+        return ResponseEntity.ok(new LoginDTO(
+                                                new UserDTO(userEntity.getId()
+                                                        , userEntity.getEmail()
+                                                        , userEntity.getPassword()
+                                                        , userEntity.getLogin()
+                                                        , userEntity.getType().getTipo()
+                                                        , userEntity.getName())
+                                                , token));
     }
 
     @PostMapping("/register")
