@@ -3,6 +3,7 @@ package br.com.abc.domain;
 import br.com.abc.domain.core.BaseEntity;
 import br.com.abc.domain.enums.TipoUsuario;
 import br.com.abc.domain.enums.UsuarioRole;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
@@ -21,6 +22,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class UserEntity extends BaseEntity implements UserDetails {
 
     @Column(name = "login", nullable = false, unique = true)

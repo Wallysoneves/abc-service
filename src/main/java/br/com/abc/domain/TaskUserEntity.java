@@ -1,6 +1,7 @@
 package br.com.abc.domain;
 
 import br.com.abc.domain.core.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import jakarta.validation.constraints.NotBlank;
@@ -14,6 +15,7 @@ import jakarta.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class TaskUserEntity extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -21,7 +23,6 @@ public class TaskUserEntity extends BaseEntity {
     @NotNull(message = "User must not be null")
     private UserEntity user;
 
-    @Lob
     @Column(name = "html_content", nullable = false)
     @NotBlank(message = "HTML content must not be blank")
     private String htmlContent;
