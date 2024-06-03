@@ -52,7 +52,7 @@ public class AuthenticationService implements UserDetailsService {
             throw new SecurityException("Authentication failed");
         }
 
-        var token = tokenService.generateToken((UserEntity) auth.getPrincipal());
+        var token = tokenService.geneteToken((UserEntity) auth.getPrincipal());
 
         UserEntity userEntity = this.userRepository.encontrarPorLogin(data.login());
         return new LoginDTO(

@@ -18,22 +18,25 @@ public class TokenService {
     @Value("${api.security.token.secret}")
     private String secret;
 
-    public String generateToken(UserEntity user) {
+    public String geneteToken(UserEntity usuario) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
 
-            return JWT.create()
+            String token = JWT.create()
                     .withIssuer("auth-api")
-                    .withSubject(user.getLogin())
-                    .withExpiresAt(generateExpirationDate())
+                    .withSubject(usuario.getLogin())
+                    .withExpiresAt(genExpirationDate())
                     .sign(algorithm);
 
+            return token;
+
         } catch (JWTCreationException e) {
-            throw new RuntimeException("Error generating token", e);
+            throw new RuntimeException("Erro ao gerar token", e);
         }
     }
 
-    public String validateToken(String token) {
+    public String validarToken(String token) {
+
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
 
@@ -44,11 +47,11 @@ public class TokenService {
                     .getSubject();
 
         } catch (JWTVerificationException e) {
-            throw new RuntimeException("Error validating token", e);
+            throw new RuntimeException("Erro ao validar token", e);
         }
     }
 
-    private Instant generateExpirationDate() {
+    private Instant genExpirationDate() {
         return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
     }
 }

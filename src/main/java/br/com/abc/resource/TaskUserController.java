@@ -18,7 +18,6 @@ public class TaskUserController {
     private TaskUserService taskUserService;
 
     @PostMapping(
-            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE}
     )
     public ResponseEntity<TaskUserEntity> create(@RequestParam("task") String task, @RequestParam("userId") Long userId) {
