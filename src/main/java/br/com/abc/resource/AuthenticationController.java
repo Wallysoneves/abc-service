@@ -5,12 +5,14 @@ import br.com.abc.domain.dto.AuthenticationDTO;
 import br.com.abc.domain.dto.LoginDTO;
 import br.com.abc.domain.dto.RegisterDTO;
 import br.com.abc.domain.dto.UserDTO;
+import br.com.abc.infrastructure.exception.AbcException;
 import br.com.abc.infrastructure.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,26 +37,35 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginDTO> login(@RequestBody @Valid AuthenticationDTO data) {
-        var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
-        var auth = this.authenticationManager.authenticate(usernamePassword);
 
-        var token = tokenService.geneteToken((UserEntity) auth.getPrincipal());
-        UserEntity userEntity = this.userRepository.encontrarPorLogin(data.login());
+        try {
+            var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
+            var auth = this.authenticationManager.authenticate(usernamePassword);
 
-        return ResponseEntity.ok(new LoginDTO(
-                                                new UserDTO(userEntity.getId()
-                                                        , userEntity.getEmail()
-                                                        , userEntity.getPassword()
-                                                        , userEntity.getLogin()
-                                                        , userEntity.getType().getTipo()
-                                                        , userEntity.getName())
-                                                , token));
+            var token = tokenService.geneteToken((UserEntity) auth.getPrincipal());
+            UserEntity userEntity = this.userRepository.encontrarPorLogin(data.login());
+
+            return ResponseEntity.ok(new LoginDTO(
+                                                    new UserDTO(userEntity.getId()
+                                                            , userEntity.getEmail()
+                                                            , userEntity.getPassword()
+                                                            , userEntity.getLogin()
+                                                            , userEntity.getType().getTipo()
+                                                            , userEntity.getName())
+                                                    , token));
+        } catch (Exception e) {
+            throw new AbcException("Usuário não possui cadastro", HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody @Valid RegisterDTO data) {
+    public ResponseEntity<?> register(@RequestBody @Valid RegisterDTO data) {
         if (this.userRepository.findByLogin(data.login()) != null) {
-            return new ResponseEntity<>("This user is already registered!", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Este login já possui vinculo a uma conta", HttpStatus.BAD_REQUEST);
+        }
+
+        if (this.userRepository.findByEmail(data.email()) != null) {
+            return new ResponseEntity("Este email já é vinculado a uma conta", HttpStatus.BAD_REQUEST);
         }
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
@@ -69,6 +80,6 @@ public class AuthenticationController {
 
         this.userRepository.save(newUser);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(this.login(new AuthenticationDTO(data.login(), data.password())).getBody());
     }
 }
