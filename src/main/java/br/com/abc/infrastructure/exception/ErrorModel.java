@@ -20,5 +20,5 @@ public class ErrorModel {
 
     private HttpStatus status;
     private List<String> errors;
-    private String erro;
+    private String error;
 }
