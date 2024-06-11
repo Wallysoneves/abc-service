@@ -63,7 +63,7 @@ public class SecurityConfigurations {
     @Bean
     protected CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(List.of("http://localhost:4200", "https://abc-3210p5dvs-wallysons-projects-c8fa9844.vercel.app/")); // Defina seus domínios permitidos aqui
+        configuration.setAllowedOriginPatterns(List.of("http://localhost:4200", "https://abc-app-beryl.vercel.app/")); // Defina seus domínios permitidos aqui
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
         configuration.setAllowCredentials(true);
